@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
+import { TextEffect } from "@/components/ui/text-effect";
 
 export default function Home() {
   return (
-    <div className="relative w-[100vw] h-[50vw]">
+    <div className="relative w-full h-[70vh] max-w-[1440px] mx-auto">
       <Image
         src={"/images/herbs-in-jars.jpg"}
         alt="FloralVault Logo"
@@ -11,14 +12,26 @@ export default function Home() {
         objectFit="cover"
         objectPosition="center"
       />
-      <div className="flex flex-col items-center min-h-screen gap-4 text-white">
+      <div className="flex flex-col items-center gap-4 text-white">
         <section className="z-10 flex items-center justify-center ">
-          <h2 className="z-10 pt-20 font-semibold text-4xl text-center justify-center">
+          <TextEffect
+            per="line"
+            as="h1"
+            speedReveal={0.5}
+            className="z-10 pt-14 font-semibold text-4xl text-center justify-center"
+          >
             Welcome to FloralVault
-          </h2>
+          </TextEffect>
           {/* <span> 🌿</span> */}
         </section>
-        <p className="z-10 text-lg">You&apos;re personal garden of Eden</p>
+        <TextEffect
+          delay={1}
+          speedReveal={0.5}
+          speedSegment={0.15}
+          className="z-10 text-lg"
+        >
+          Your collection of Eden
+        </TextEffect>
       </div>
     </div>
   );

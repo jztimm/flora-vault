@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex w-full h-24 px-10 pt-2 items-center justify-between bg-gradient-to-b from-[#f0e7d8] to-[#f9f3e6]">
+    <div className="flex w-full h-24 px-10 pt-2 items-center justify-between bg-[#f0ece6]">
       {/* Logo */}
       <h1
         className="text-4xl font-bold tracking-tight text-foreground cursor-pointer"
