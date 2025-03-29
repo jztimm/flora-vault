@@ -22,7 +22,25 @@
 
 ---
 
-## 📁 Folder Structure
+## 🧠 Development Workflow
+
+This project uses a simple and clean Git workflow
+
+- All work happens in feature branches (e.g., `feature/hero-section`)
+- Each branch corresponds to a GitHub issue
+- Once complete, a pull request is opened into the `main` branch
+- The PR must include a clear description and link to the issue
+
+### 🥕 Example Branching Flow
+
+1. Open a GitHub issue (e.g. `[feature] Add hero section`)
+2. Create a feature branch:
+   git checkout -b feature/hero-section
+3. Commit changes related to that issue only
+4. Push the branch and open a PR targeting `main`
+5. Merge after review (even if it's solo)
+
+This workflow allows for clean tracking of progress, feature isolation, and easier maintenance.
 
 ---
 
