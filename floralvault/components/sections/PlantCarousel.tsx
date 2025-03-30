@@ -68,23 +68,24 @@ export default function PlantCarousel() {
                   <div className="relative rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
 
+                    {/* Plant Info */}
                     <img
                       src={plant.imageUrl}
                       alt={plant.common_name || plant.scientific_name}
                       className="w-full h-80 object-cover"
                     />
-
                     <div className="absolute inset-0 flex flex-col justify-end p-4 z-20">
                       <h3 className="text-lg font-bold leading-tight line-clamp-2">
-                        {plant.common_name || plant.scientific_name}
+                        {plant.common_name}
                       </h3>
                       <p className="text-sm font-medium opacity-90">
-                        {plant.origin}
+                        {plant.scientific_name}
                       </p>
                       <p className="text-sm opacity-80 line-clamp-1">
-                        {plant.family}
+                        {plant.description}
                       </p>
 
+                      {/* Tags */}
                       <div className="flex gap-1 mt-2">
                         {plant.tags.slice(0, 3).map((tag, i) => (
                           <Link
