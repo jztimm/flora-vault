@@ -1,5 +1,4 @@
 import React from "react";
-import { plantData } from "@/mock/plantData";
 import PlantCarousel from "./PlantCarousel";
 
 const NewlyAddedCollections = () => {
