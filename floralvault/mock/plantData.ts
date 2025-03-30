@@ -9,8 +9,9 @@ export const plantData: Plant[] = [
     origin: "India",
     family: "Lamiaceae",
     type: "herb",
-    imageUrl:
+    imageUrl: [
       "https://images.unsplash.com/photo-1500420254515-0faefa2dac99?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3",
+    ],
     description:
       "Basil is a popular culinary herb known for its aromatic leaves and use in pesto and Italian dishes.",
     userId: "user-101",
@@ -28,8 +29,9 @@ export const plantData: Plant[] = [
     origin: "East Asia",
     family: "Ganodermataceae",
     type: "mushroom",
-    imageUrl:
+    imageUrl: [
       "https://learn.freshcap.com/wp-content/uploads/2020/07/reishi-grow-blog-title.png",
+    ],
     description:
       "Reishi is a medicinal mushroom traditionally used in Chinese medicine for its immune-boosting properties.",
     userId: "user-101",
@@ -47,8 +49,9 @@ export const plantData: Plant[] = [
     origin: "Arabian Peninsula",
     family: "Asphodelaceae",
     type: "succulent",
-    imageUrl:
+    imageUrl: [
       "https://atalayabio.com/cdn/shop/articles/ATALAYABIO_HijuelosAloeVera-1080x1080px_77788d9f-223a-45be-abf6-1650d2c07de2.jpg?v=1715778245",
+    ],
     description:
       "Aloe vera is a succulent plant known for its soothing and healing gel.",
     userId: "user-204",
@@ -66,8 +69,9 @@ export const plantData: Plant[] = [
     origin: "Europe",
     family: "Lamiaceae",
     type: "herb",
-    imageUrl:
+    imageUrl: [
       "https://www.hishtil.com/media/20982/mentha-spicata-spanish.jpg?width=700&height=700&mode=crop",
+    ],
     description:
       "Spearmint is a refreshing herb used in teas, desserts, and natural remedies.",
     userId: "user-302",
@@ -85,8 +89,9 @@ export const plantData: Plant[] = [
     origin: "Mediterranean",
     family: "Lamiaceae",
     type: "shrub",
-    imageUrl:
+    imageUrl: [
       "https://romencegardens.com/cdn/shop/files/lavandula_sweetromance1__72025.1711380523.1280.1280.jpg?v=1724161421&width=1214",
+    ],
     description:
       "Lavender is a fragrant plant popular for aromatherapy and stress relief.",
     userId: "user-302",
@@ -104,8 +109,9 @@ export const plantData: Plant[] = [
     origin: "North America",
     family: "Asteraceae",
     type: "flower",
-    imageUrl:
+    imageUrl: [
       "https://www.bluestoneperennials.com/img/ECPU/650/ECPU_0_Echinacea_Purpurea.1491333866.jpg",
+    ],
     description:
       "Echinacea is known for boosting the immune system and is used in herbal remedies.",
     userId: "user-104",
@@ -123,7 +129,9 @@ export const plantData: Plant[] = [
     origin: "Europe",
     family: "Ericaceae",
     type: "shrub",
-    imageUrl: "https://www.la-saponaria.com/img/cms/mirtillo-frutto-pianta.jpg",
+    imageUrl: [
+      "https://www.la-saponaria.com/img/cms/mirtillo-frutto-pianta.jpg",
+    ],
     description:
       "Bilberry is rich in antioxidants and traditionally used to support vision and circulation.",
     userId: "user-104",
@@ -141,8 +149,9 @@ export const plantData: Plant[] = [
     origin: "China",
     family: "Cucurbitaceae",
     type: "vine",
-    imageUrl:
+    imageUrl: [
       "https://seedsforgarden.com/cdn/shop/articles/Gynostemma_pentaphyllum_Seeds.jpg?v=1738695286",
+    ],
     description:
       "Jiaogulan is known as the 'immortality herb' in Chinese medicine for its adaptogenic and longevity-supporting properties.",
     userId: "user-888",
@@ -160,8 +169,9 @@ export const plantData: Plant[] = [
     origin: "Turkey",
     family: "Apiaceae",
     type: "herb",
-    imageUrl:
+    imageUrl: [
       "https://thebigsmoke.com.au/wp-content/uploads/Ferula_assa-foetida_-_Kyzylkum_5-scaled.jpg",
+    ],
     description:
       "Ferula drudeana is considered a modern candidate for the ancient medicinal plant silphium, once prized for numerous therapeutic uses.",
     userId: "user-888",
@@ -179,8 +189,9 @@ export const plantData: Plant[] = [
     origin: "Mexico",
     family: "Asparagaceae",
     type: "succulent",
-    imageUrl:
+    imageUrl: [
       "https://www.littlerednursery.com/cdn/shop/files/tequilla.jpg?v=1709492819",
+    ],
     description:
       "Blue Agave is used to produce tequila and contains inulin, a prebiotic fiber with potential health benefits.",
     userId: "user-101",

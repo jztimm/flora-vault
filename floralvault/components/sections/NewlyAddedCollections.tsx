@@ -1,16 +1,17 @@
 import React from "react";
 import { plantData } from "@/mock/plantData";
+import PlantCarousel from "./PlantCarousel";
 
 const NewlyAddedCollections = () => {
   return (
     <div>
-      <h1 className="text-3xl font-semibold px-10 py-5 cursor-pointer text-gray-800 dark:text-white">
+      {/* <h1 className="text-3xl font-semibold px-10 py-5 cursor-pointer text-gray-800 dark:text-white">
         Newly Added Collections
-      </h1>
+      </h1> */}
 
-      <div className="flex flex-wrap justify-center gap-4 px-10 py-5">
+      <div className="flex flex-wrap justify-center gap-4 px-10">
         {/* Example Plant Card */}
-        {plantData.map((plant, index) => (
+        {/* {plantData.map((plant, index) => (
           <div
             key={index}
             className="w-1/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -32,8 +33,9 @@ const NewlyAddedCollections = () => {
                 : plant.description}
             </p>
           </div>
-        ))}
+        ))} */}
       </div>
+      <PlantCarousel />
     </div>
   );
 };

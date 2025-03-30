@@ -19,7 +19,7 @@ export interface Plant {
     | "bulb"
     | "aquatic"
     | "mushroom";
-  imageUrl: string;
+  imageUrl: string[];
   description: string;
   userId: string;
   tags: string[];
