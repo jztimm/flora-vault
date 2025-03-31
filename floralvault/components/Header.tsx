@@ -94,7 +94,7 @@ const Header = () => {
               <div
                 key={plant.id}
                 onClick={() => {
-                  router.push(`/results?query=${plant.scientific_name}`);
+                  router.push(`/plant/${plant.slug}`);
                   setIsPopoverOpen(false);
                 }}
               >

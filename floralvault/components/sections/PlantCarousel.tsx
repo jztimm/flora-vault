@@ -15,7 +15,7 @@ import Image from "next/image";
 export default function PlantCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselApiRef = useRef<any>(null);
-  const apiRef = useRef<any>(null); // new internal ref
+  const apiRef = useRef<any>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const updateActiveIndex = () => {
@@ -69,12 +69,15 @@ export default function PlantCarousel() {
                 {plantData.map((plant) => (
                   <CarouselItem
                     key={plant.id}
-                    className="md:basis-1/3 lg:basis-1/5 px-4"
+                    className="md:basis-1/3 lg:basis-1/5 px-4 relative"
                   >
-                    <div className="relative rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.03] cursor-pointer">
+                    {/* Clickable Card */}
+                    <Link
+                      href={`/plant/${plant.slug}`}
+                      className="block relative rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.03] cursor-pointer"
+                    >
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
 
-                      {/* Plant Info */}
                       <Image
                         src={plant.imageUrl[0]}
                         alt={plant.common_name || plant.scientific_name}
@@ -82,7 +85,7 @@ export default function PlantCarousel() {
                         height={320}
                         className="w-full h-80 object-cover rounded-md"
                       />
-                      <div className="absolute inset-0 flex flex-col justify-end p-4 z-20">
+                      <div className="absolute inset-0 flex flex-col justify-end p-4 z-20 bottom-8">
                         <h3 className="text-lg font-bold leading-tight line-clamp-2">
                           {plant.common_name}
                         </h3>
@@ -92,24 +95,24 @@ export default function PlantCarousel() {
                         <p className="text-sm opacity-80 line-clamp-1">
                           {plant.description}
                         </p>
-
-                        {/* Tags */}
-                        <div className="flex gap-1 mt-2">
-                          {plant.tags.slice(0, 3).map((tag, i) => (
-                            <Link
-                              href={`/results?tag=${encodeURIComponent(tag)}`}
-                              key={i}
-                            >
-                              <Badge
-                                variant="secondary"
-                                className="text-[12px] justify-center px-2 py-0.5 max-w-[80px] truncate hover:bg-[#5f9f6a] hover:rounded-2xl hover:text-white"
-                              >
-                                {tag}
-                              </Badge>
-                            </Link>
-                          ))}
-                        </div>
                       </div>
+                    </Link>
+
+                    {/* Tags - separate from the Link */}
+                    <div className="absolute bottom-3 left-6 z-30 flex gap-1 flex-wrap">
+                      {plant.tags.slice(0, 3).map((tag, i) => (
+                        <Link
+                          key={i}
+                          href={`/results?tag=${encodeURIComponent(tag)}`}
+                        >
+                          <Badge
+                            variant="secondary"
+                            className="text-[12px] px-2 py-0.5 max-w-[80px] truncate hover:bg-[#5f9f6a] hover:text-white hover:rounded-2xl"
+                          >
+                            {tag}
+                          </Badge>
+                        </Link>
+                      ))}
                     </div>
                   </CarouselItem>
                 ))}
