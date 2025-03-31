@@ -49,7 +49,7 @@ const Header = () => {
           plant.tags.some((tag) => tag.toLowerCase().includes(debouncedQuery));
         return match;
       })
-      .slice(0, 8);
+      .slice(0, 5);
 
     setSuggestions(filtered);
     setIsPopoverOpen(filtered.length > 0);
@@ -77,32 +77,33 @@ const Header = () => {
       </h1>
 
       {/* Searchbar */}
-      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-        <PopoverTrigger asChild>
-          <form onSubmit={handleSearch} className="relative w-1/2">
-            <Input
-              type="text"
-              placeholder="Search plants, users, tags, or ailments..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pr-10 rounded-2xl bg-white border-0"
-            />
-            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 cursor-pointer" />
-          </form>
-        </PopoverTrigger>
-        <PopoverContent className="w-[800px] p-2 bg-white">
-          {suggestions.map((plant) => (
-            <div
-              key={plant.id}
-              onClick={() =>
-                router.push(`/results?query=${plant.scientific_name}`)
-              }
-            >
-              <ResultsCard plant={plant} compact />
-            </div>
-          ))}
-        </PopoverContent>
-      </Popover>
+
+      <form onSubmit={handleSearch} className="relative w-1/2">
+        <Input
+          type="text"
+          placeholder="Search plants, users, tags, or ailments..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pr-10 rounded-2xl bg-white border-0"
+        />
+        <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 cursor-pointer" />
+        {/* Popover-style dropdown */}
+        {isPopoverOpen && (
+          <div className="absolute top-full mt-2 z-50 w-full bg-transparent rounded-md shadow-lg p-2 max-h-[800px] overflow-y-hidden">
+            {suggestions.map((plant) => (
+              <div
+                key={plant.id}
+                onClick={() => {
+                  router.push(`/results?query=${plant.scientific_name}`);
+                  setIsPopoverOpen(false);
+                }}
+              >
+                <ResultsCard plant={plant} compact />
+              </div>
+            ))}
+          </div>
+        )}
+      </form>
 
       {/* Login */}
       <Link href="/login">
