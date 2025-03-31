@@ -7,24 +7,38 @@ import { Badge } from "../ui/badge";
 
 interface ResultsCardProps {
   plant: Plant;
+  compact?: boolean;
 }
 
-const ResultsCard = ({ plant }: ResultsCardProps) => {
+const ResultsCard = ({ plant, compact = false }: ResultsCardProps) => {
   return (
-    <div className="flex flex-col sm:flex-row w-full max-w-7xl md:max-h-[260px] gap-2 mb-5 bg-[#2b2a2a] rounded-2xl p-5 cursor-pointer shadow-lg shadow-black/30 hover:shadow-xl transition-shadow duration-200 ease-in-out">
+    <div
+      className={`${
+        compact
+          ? "flex items-center gap-3 p-2 text-white bg-[#2b2a2a] rounded-md hover:bg-[#3a3a3a]"
+          : "flex flex-col sm:flex-row w-full max-w-7xl md:max-h-[260px] gap-2 mb-5 bg-[#2b2a2a] rounded-2xl p-5"
+      } cursor-pointer shadow-lg shadow-black/30 hover:shadow-xl transition-shadow duration-200 ease-in-out`}
+    >
       {/* Plant Image */}
       <Image
         src={plant.imageUrl[0]}
         alt={plant.common_name}
-        width={200}
-        height={200}
-        className="rounded-xl object-cover h-[200px] w-full sm:w-[200px] sm:h-[200px] md:w-[200px] md:h-[200px] flex-shrink-0"
+        width={compact ? 50 : 200}
+        height={compact ? 50 : 200}
+        className={`rounded-xl object-cover flex-shrink-0 ${
+          compact ? "h-[100px] w-[100px]" : "h-[200px] w-full sm:w-[200px]"
+        }`}
       />
       {/* Plant Description */}
       <div className="flex flex-col pt-4 md:pt-0 sm:pl-5 overflow-hidden">
         <div className="flex flex-col gap-1">
-          <h2 className="flex text-2xl text-[#81a308]">{plant.common_name}</h2>
-          <h3 className="text-base">{plant.scientific_name}</h3>
+          <h2 className={`${compact ? "text-sm" : "text-2xl"} text-[#81a308]`}>
+            {plant.common_name}
+          </h2>
+          <h3 className={`${compact ? "text-xs" : "text-base"}`}>
+            {plant.scientific_name}
+          </h3>
+
           <div className="flex flex-wrap gap-1 pb-4 md:pb-4">
             {plant.tags.slice(0, 3).map((tag, i) => (
               <Link href={`/results?tag=${encodeURIComponent(tag)}`} key={i}>
@@ -39,7 +53,7 @@ const ResultsCard = ({ plant }: ResultsCardProps) => {
           </div>
         </div>
 
-        <div className="mt-auto">
+        <div className={`${compact ? "hidden" : "mt-auto"}`}>
           <p className="text-sm line-clamp-3">{plant.description}</p>
         </div>
       </div>
