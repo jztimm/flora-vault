@@ -193,7 +193,7 @@ export const plantData: Plant[] = [
       "https://www.littlerednursery.com/cdn/shop/files/tequilla.jpg?v=1709492819",
     ],
     description:
-      "Blue Agave is used to produce tequila and contains inulin, a prebiotic fiber with potential health benefits.",
+      "Blue Agave (Agave tequilana) is a striking succulent native to the arid regions of Mexico, best known as the plant from which tequila is derived. Characterized by its spiky blue-green leaves that form symmetrical rosettes, this plant thrives in volcanic soils under intense sunlight. Beyond its cultural significance in spirits production, Blue Agave has also drawn attention for its high concentration of inulin, a natural prebiotic fiber believed to aid digestion and improve gut health. Traditionally used in indigenous Mexican medicine, the sap was applied topically for its antiseptic and anti-inflammatory properties, and it continues to be studied for potential metabolic and glycemic control benefits. Blue Agave's resilience to drought and its long maturation period—often 7 to 10 years—underscore its symbolic association with endurance, patience, and transformation. Whether featured ornamentally or harvested agriculturally, this plant represents a convergence of tradition, utility, and ecological adaptation.",
     userId: "user-101",
     tags: ["digestive", "prebiotic", "succulent"],
     views: 176,
