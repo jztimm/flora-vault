@@ -1,19 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { plantData } from "@/mock/plantData";
 import ResultsCard from "./cards/ResultsCard";
+
+import { Plant } from "@/types/plants";
+import { plantData } from "@/mock/plantData";
+import { navLinks } from "@/constants/navLinks";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -90,7 +87,7 @@ const Header = () => {
         {/* Popover-style dropdown */}
         {isPopoverOpen && (
           <div className="absolute top-full mt-2 z-50 w-full bg-transparent rounded-md shadow-lg p-2 max-h-[800px] overflow-y-hidden">
-            {suggestions.map((plant) => (
+            {suggestions.map((plant: Plant) => (
               <div
                 key={plant.id}
                 onClick={() => {
@@ -105,12 +102,25 @@ const Header = () => {
         )}
       </form>
 
-      {/* Login */}
-      <Link href="/login">
-        <Button className="bg-primary text-primary-foreground hover:bg-ring rounded-2xl px-4 py-2 font-semibold transition-colors duration-200 ease-in-out cursor-pointer">
-          Login
-        </Button>
-      </Link>
+      <div className="flex items-center gap-5">
+        {/* NavLinks */}
+        <div className="flex text-white gap-5">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <p className="text-white hover:bg-gradient-to-r from-[#6ca148] to-[#756b56] bg-clip-text hover:text-transparent duration-200 ease-in-out">
+                {link.label}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        {/* Login */}
+        <Link href="/login">
+          <Button className="bg-primary text-primary-foreground hover:bg-[#756b56] rounded-2xl px-4 py-2 font-semibold transition-colors duration-200 ease-in-out cursor-pointer">
+            Login
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };
