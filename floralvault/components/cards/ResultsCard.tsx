@@ -26,7 +26,7 @@ const ResultsCard = ({ plant, compact = false }: ResultsCardProps) => {
         {/* Image */}
         <Image
           src={plant.imageUrl[0]}
-          alt={plant.common_name}
+          alt={plant.common_name ?? "Unknown Plant"}
           width={compact ? 50 : 200}
           height={compact ? 50 : 200}
           className={`rounded-xl object-cover flex-shrink-0 ${
