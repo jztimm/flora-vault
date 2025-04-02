@@ -1,4 +1,4 @@
-import React from "react";
+import { use } from "react";
 import { redirect } from "next/navigation";
 import ResultsCard from "@/components/cards/ResultsCard";
 
@@ -6,15 +6,12 @@ import { plantData } from "@/mock/plantData";
 import { Plant } from "@/types/plants";
 import GoBackButton from "@/components/ui/GoBackButton";
 
-interface Props {
-  searchParams: {
-    tag?: string;
-    query?: string;
-  };
-}
-
-const ResultsPage = ({ searchParams }: Props) => {
-  const { tag, query } = searchParams;
+const ResultsPage = ({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string; query?: string }>;
+}) => {
+  const { tag, query } = use(searchParams);
 
   if (!tag && !query) {
     redirect("/");
