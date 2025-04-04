@@ -1,4 +1,4 @@
-import { User } from "@/types/users";
+import { User, UserCredentials } from "@/types/users";
 
 export const userData: User[] = [
   {
@@ -45,5 +45,33 @@ export const userData: User[] = [
     bio: "Just getting started with plant journaling 🌱",
     avatarUrl: "https://i.pravatar.cc/150?img=30",
     joinedAt: new Date("2025-03-01"),
+  },
+];
+
+export const userCred: UserCredentials[] = [
+  {
+    id: "user-101",
+    username: "greenwitch",
+    password: "herbal123",
+  },
+  {
+    id: "user-204",
+    username: "fungifolk",
+    password: "mushlove",
+  },
+  {
+    id: "user-302",
+    username: "aromaleaf",
+    password: "teabloom",
+  },
+  {
+    id: "user-888",
+    username: "medicinalroots",
+    password: "rootedHealing",
+  },
+  {
+    id: "user-999",
+    username: "emptyroots",
+    password: "plantbeginner",
   },
 ];
