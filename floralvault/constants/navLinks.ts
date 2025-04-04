@@ -8,8 +8,8 @@ export const navLinks = [
     href: "/the-vault",
   },
   {
-    label: "Discover",
-    href: "/discover",
+    label: "My Collection",
+    href: "/my-collection",
   },
   {
     label: "Submit Plant",
