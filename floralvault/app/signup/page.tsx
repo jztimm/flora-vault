@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
 import { userCred } from "@/mock/userData";
+import { useUser } from "@/context/UserContext";
+import { Eye, EyeOff } from "lucide-react";
 
 const signupSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -34,6 +36,8 @@ const signupSchema = z.object({
 const SignUp = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
+  const { setUser } = useUser();
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -82,10 +86,15 @@ const SignUp = () => {
       return null;
     }
 
+    const newUser = {
+      ...values,
+      joinedAt: new Date(),
+    };
+
     // save user data to local storage and to db then redirect to home page
     setIsLoading(false);
     localStorage.setItem("user", JSON.stringify(values));
-    console.log("Signup form submitted:", values);
+    setUser(newUser);
 
     router.push("/");
   };
@@ -174,11 +183,20 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="••••••••"
-                        type="password"
-                        {...field}
-                      />
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="••••••••"
+                          {...field}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+                        >
+                          {showPassword ? <EyeOff /> : <Eye />}
+                        </button>
+                      </div>
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>

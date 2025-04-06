@@ -55,6 +55,16 @@ export const userData: User[] = [
     avatarUrl: "https://i.pravatar.cc/150?img=33",
     joinedAt: new Date("2025-04-05"),
   },
+  {
+    id: "user-14",
+    username: "jominime",
+    firstName: "Jane",
+    lastName: "Smith",
+    bio: "I love spending time in the garden and watching things grow. Fig trees are my favorite, and I enjoy learning how to care for them along with other fruits and herbs. Homesteading gives me a sense of peace and purpose, and I’m always finding new ways to make the most of what I grow. Whether it’s planting something new or just enjoying the quiet outside, I’m happiest with my hands in the soil.",
+    avatarUrl:
+      "https://static.myfigurecollection.net/upload/users/200/216069_1617412905.jpeg",
+    joinedAt: new Date("2025-04-05"),
+  },
 ];
 
 export const userCred: UserCredentials[] = [
@@ -92,6 +102,12 @@ export const userCred: UserCredentials[] = [
     id: "user-1000",
     username: "test",
     email: "testy.mctestface@floralvault.dev",
+    password: "Test2025",
+  },
+  {
+    id: "user-14",
+    username: "jominime",
+    email: "jomi@test.com",
     password: "Test2025",
   },
 ];

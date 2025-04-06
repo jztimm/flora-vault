@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import Link from "next/link";
 import { cn, loginUser } from "@/lib/utils";
+import { useUser } from "@/context/UserContext";
+import { Eye, EyeOff } from "lucide-react";
 
 const formSchema = z.object({
   username: z
@@ -35,6 +37,9 @@ const formSchema = z.object({
 const Login = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const { setUser } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,8 +65,8 @@ const Login = () => {
 
     // Handle successful login here (e.g., redirect to Home page)
     setIsLoading(false);
-    console.log("Login successful:", user);
     localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
 
     // Redirect to Home page
     router.push("/");
@@ -104,7 +109,20 @@ const Login = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="••••••••" {...field} type="password" />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+                      >
+                        {showPassword ? <EyeOff /> : <Eye />}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage className="text-red-500 font-semibold" />
                 </FormItem>
