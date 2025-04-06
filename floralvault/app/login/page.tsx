@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
+import { cn, loginUser } from "@/lib/utils";
 
 const formSchema = z.object({
   username: z
@@ -31,6 +33,9 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,7 +45,26 @@ const Login = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setIsLoading(true);
+
+    const user = loginUser(values);
+
+    if (!user) {
+      setIsLoading(false);
+      form.setError("username", {
+        type: "manual",
+        message: "Invalid username or password",
+      });
+      return;
+    }
+
+    // Handle successful login here (e.g., redirect to Home page)
+    setIsLoading(false);
+    console.log("Login successful:", user);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Redirect to Home page
+    router.push("/");
   }
 
   return (
@@ -88,10 +112,16 @@ const Login = () => {
             />
 
             <button
-              className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
               type="submit"
+              disabled={isLoading}
+              className={cn(
+                "group/btn relative block h-10 w-full rounded-md font-medium text-white transition",
+                isLoading
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gradient-to-br from-black to-neutral-600 hover:scale-[1.01]"
+              )}
             >
-              Login →
+              {isLoading ? "Logging in..." : "Login →"}
               <BottomGradient />
             </button>
           </form>

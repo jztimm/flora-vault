@@ -46,32 +46,52 @@ export const userData: User[] = [
     avatarUrl: "https://i.pravatar.cc/150?img=30",
     joinedAt: new Date("2025-03-01"),
   },
+  {
+    id: "user-1000",
+    username: "test",
+    firstName: "Testy",
+    lastName: "McTestface",
+    bio: "This is a test user account for local dev.",
+    avatarUrl: "https://i.pravatar.cc/150?img=33",
+    joinedAt: new Date("2025-04-05"),
+  },
 ];
 
 export const userCred: UserCredentials[] = [
   {
     id: "user-101",
     username: "greenwitch",
+    email: "rowan.sage@floralwitchery.com",
     password: "herbal123",
   },
   {
     id: "user-204",
     username: "fungifolk",
+    email: "theo.myco@mycoforest.org",
     password: "mushlove",
   },
   {
     id: "user-302",
     username: "aromaleaf",
+    email: "selena.hart@aromaleaf.co",
     password: "teabloom",
   },
   {
     id: "user-888",
     username: "medicinalroots",
+    email: "diego.ramos@rootsremedy.lat",
     password: "rootedHealing",
   },
   {
     id: "user-999",
     username: "emptyroots",
+    email: "nova.lin@plantjournal.space",
     password: "plantbeginner",
+  },
+  {
+    id: "user-1000",
+    username: "test",
+    email: "testy.mctestface@floralvault.dev",
+    password: "Test2025",
   },
 ];
