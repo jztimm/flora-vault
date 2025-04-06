@@ -144,12 +144,17 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer hover:group">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage
+                  src={user.avatarUrl || "https://github.com/shadcn.png"}
+                />
+                <AvatarFallback className="bg-white">
+                  {user.firstName.slice(0, 1).toLocaleUpperCase()}
+                  {user.lastName.slice(0, 1).toLocaleUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className=" bg-[#2b2a2a] text-white items-center justify-center cursor-pointer rounded-2xl w-48 mt-1">
+            <DropdownMenuContent className=" bg-[#2b2a2a] text-white items-center justify-center cursor-pointer rounded-2xl w-48 mt-1 mr-5 scrollbar-none">
               <DropdownMenuLabel>
                 <Link href={`/profile/${user.username}`} className="text-lg">
                   {user.username}&apos;s Profile
@@ -157,7 +162,7 @@ const Header = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/">Settings</Link>
+                <Link href="/settings">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer" onClick={logout}>
                 Logout
