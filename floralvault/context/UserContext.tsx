@@ -2,6 +2,7 @@
 
 import { User } from "@/types/users";
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "sonner";
 
 interface UserContextType {
   user: User | null;
@@ -24,6 +25,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    toast.success("Logged out successfully.");
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,6 +30,17 @@ const SettingsPage = () => {
   const { user, setUser } = useUser();
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      toast.error("You must be logged in to access this page.");
+      setTimeout(() => {
+        router.push("/login?unauthorized=true");
+      }, 100); // even 50ms works fine
+    }
+  }, [user, router]);
+
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
     defaultValues: {
@@ -51,9 +63,6 @@ const SettingsPage = () => {
     const updatedUser = {
       ...user,
       ...values,
-      username: user.username,
-      id: user.id,
-      joinedAt: user.joinedAt,
     };
     localStorage.setItem("user", JSON.stringify(updatedUser));
     setUser(updatedUser);
@@ -67,7 +76,13 @@ const SettingsPage = () => {
     setIsLoading(false);
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
+    // Protected route, only accessible to logged-in users
+
     <div className="min-h-screen px-4 py-10 md:px-12 bg-gradient-to-r from-[#3A3A38] to-[#151512] text-white">
       <div className="max-w-xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Account Settings</h1>

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,6 +18,7 @@ import Link from "next/link";
 import { cn, loginUser } from "@/lib/utils";
 import { useUser } from "@/context/UserContext";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   username: z
@@ -40,6 +41,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const { setUser } = useUser();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const unauthorized = searchParams.get("unauthorized");
+    if (unauthorized === "true") {
+      toast.error("Please login to access that page.");
+    }
+  }, [searchParams]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,12 +73,18 @@ const Login = () => {
     }
 
     // Handle successful login here (e.g., redirect to Home page)
+    toast.success(
+      `Welcome back, ${user.firstName || user.username}! You are now logged in.`
+    );
+
     setIsLoading(false);
     localStorage.setItem("user", JSON.stringify(user));
     setUser(user);
 
     // Redirect to Home page
-    router.push("/");
+    setTimeout(() => {
+      router.push("/");
+    }, 1000);
   }
 
   return (
