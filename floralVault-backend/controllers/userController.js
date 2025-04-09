@@ -6,7 +6,17 @@ const prisma = new PrismaClient();
 export const getAllUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(200).json(users);
+    const { password, firstName, lastName, ...rest } = users.map((user) => {
+      return {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        bio: user.bio,
+        avatarUrl: user.avatarUrl,
+      };
+    });
+
+    res.status(200).json(rest);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Internal Server Error" });

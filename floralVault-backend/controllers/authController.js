@@ -1,17 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 const prisma = new PrismaClient();
 
+const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "30d",
+  });
+};
+
 // POST /api/auth/login
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { username },
     });
-    console.log("User: ", user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -20,15 +27,19 @@ export const loginUser = async (req, res) => {
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
+      const token = generateToken(user.id);
 
       return res.status(200).json({
-        id: user.id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        bio: user.bio,
-        avatarUrl: user.avatarUrl,
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          bio: user.bio,
+          avatarUrl: user.avatarUrl,
+        },
       });
     }
   } catch (error) {
@@ -73,9 +84,13 @@ export const registerUser = async (req, res) => {
       },
     });
 
+    const token = generateToken(newUser.id);
     const { password: _password, ...userWithoutPassword } = newUser;
 
-    return res.status(201).json(userWithoutPassword);
+    return res.status(201).json({
+      token,
+      user: userWithoutPassword,
+    });
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ message: "Failed to create user" });
