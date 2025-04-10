@@ -34,8 +34,6 @@ export const loginUser = async (req, res) => {
         user: {
           id: user.id,
           username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
           email: user.email,
           bio: user.bio,
           avatarUrl: user.avatarUrl,
@@ -85,11 +83,16 @@ export const registerUser = async (req, res) => {
     });
 
     const token = generateToken(newUser.id);
-    const { password: _password, ...userWithoutPassword } = newUser;
 
     return res.status(201).json({
       token,
-      user: userWithoutPassword,
+      user: {
+        id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        bio: newUser.bio,
+        avatarUrl: newUser.avatarUrl,
+      },
     });
   } catch (error) {
     console.error("Error creating user:", error);
