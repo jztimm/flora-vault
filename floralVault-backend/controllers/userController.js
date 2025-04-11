@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -44,17 +45,32 @@ export const getCurrentUser = async (req, res) => {
 
 // PUT update a user
 export const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { username, firstName, lastName, email, password, bio, avatarUrl } =
+  const { id } = req.user;
+  const { username, firstName, lastName, email, bio, avatarUrl, password } =
     req.body;
 
   try {
+    const dataToUpdate = {
+      username,
+      firstName,
+      lastName,
+      email,
+      bio,
+      avatarUrl,
+    };
+
+    if (password && password.trim() !== "") {
+      dataToUpdate.password = await bcrypt.hash(password, 10);
+    }
+
     const updatedUser = await prisma.user.update({
       where: { id },
-      data: { username, firstName, lastName, email, password, bio, avatarUrl },
+      data: dataToUpdate,
     });
 
-    res.status(200).json(updatedUser);
+    const { password: _password, ...userWithoutPassword } = updatedUser;
+
+    res.status(200).json(userWithoutPassword);
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ message: "Failed to update user" });
@@ -63,14 +79,16 @@ export const updateUser = async (req, res) => {
 
 // DELETE a user
 export const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
 
   try {
     await prisma.user.delete({
       where: { id },
     });
 
-    res.status(204).send();
+    return res
+      .status(200)
+      .json({ message: "User account successfully deleted." });
   } catch (error) {
     console.error("Error deleting user:", error);
     res.status(500).json({ message: "Failed to delete user" });
