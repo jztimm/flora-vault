@@ -37,6 +37,7 @@ export const loginUser = async (req, res) => {
           email: user.email,
           bio: user.bio,
           avatarUrl: user.avatarUrl,
+          essence: user.essence,
         },
       });
     }
@@ -78,6 +79,7 @@ export const registerUser = async (req, res) => {
         password: await bcrypt.hash(password, 10),
         bio,
         avatarUrl,
+        essence: user.essence,
         joinedAt: new Date(),
       },
     });
