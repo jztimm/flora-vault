@@ -22,6 +22,6 @@ model User {
   lastName  String
   avatarUrl String?
   bio       String?
-  karma     Int      @default(0)
+  essence     Int      @default(0)
   joinedAt  DateTime
 }
