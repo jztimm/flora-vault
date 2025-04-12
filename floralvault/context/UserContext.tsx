@@ -25,6 +25,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     toast.success("Logged out successfully.");
   };
 
