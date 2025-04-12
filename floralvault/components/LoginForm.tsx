@@ -47,9 +47,9 @@ const LoginForm = () => {
     }
   }, [searchParams]);
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    const user = loginUser(values);
+    const user = await loginUser(values);
 
     if (!user) {
       setIsLoading(false);
@@ -63,7 +63,9 @@ const LoginForm = () => {
     toast.success(`Welcome back, ${user.firstName || user.username}!`);
     localStorage.setItem("user", JSON.stringify(user));
     setUser(user);
-    router.push("/");
+
+    const redirect = searchParams.get("redirect") || "/";
+    router.push(redirect);
   };
 
   return (
