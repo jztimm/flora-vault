@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ResultsCard from "./cards/ResultsCard";
 
 import { Plant } from "@/types/plants";
@@ -40,6 +40,7 @@ const Header = () => {
   const { user, logout } = useUser();
 
   const router = useRouter();
+  const pathname = usePathname() || "/";
 
   // Debounce
   useEffect(() => {
@@ -148,8 +149,8 @@ const Header = () => {
                   src={user.avatarUrl || "https://github.com/shadcn.png"}
                 />
                 <AvatarFallback className="bg-white">
-                  {user.firstName.slice(0, 1).toLocaleUpperCase()}
-                  {user.lastName.slice(0, 1).toLocaleUpperCase()}
+                  {user?.firstName?.slice(0, 1).toLocaleUpperCase()}
+                  {user?.lastName?.slice(0, 1).toLocaleUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -170,7 +171,7 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link href="/login">
+          <Link href={`/login?redirect=${pathname}`}>
             <Button className="bg-primary text-primary-foreground hover:bg-[#756b56] rounded-2xl px-4 py-2 font-semibold transition-colors duration-200 ease-in-out cursor-pointer">
               Login
             </Button>

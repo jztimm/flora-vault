@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,15 +31,18 @@ const SettingsPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!user) {
       toast.error("You must be logged in to access this page.");
       setTimeout(() => {
-        router.push("/login?unauthorized=true");
-      }, 100); // even 50ms works fine
+        router.push(
+          `/login?unauthorized=true&redirect=${encodeURIComponent(pathname)}`
+        );
+      }, 100);
     }
-  }, [user, router]);
+  }, [user, router, pathname]);
 
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),

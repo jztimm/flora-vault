@@ -1,34 +1,43 @@
-import { userCred, userData } from "@/mock/userData";
 import { User, UserCredentials } from "@/types/users";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+const baseUrl = process.env.NEXT_PUBLIC_FLORAL_VAULT_API_URL;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function loginUser({
+export async function loginUser({
   username,
   password,
-}: UserCredentials): User | null {
-  const matchedCred = userCred.find(
-    (user) => user.username === username && user.password === password
-  );
+}: UserCredentials): Promise<User | null> {
+  try {
+    const response = await fetch(baseUrl + "/api/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-  if (!matchedCred) return null;
+    const data = await response.json();
 
-  const fullUser = userData.find((user) => user.id === matchedCred.id);
+    if (!response.ok) {
+      console.error("Login failed:", data.message || "Unknown error");
+      return null;
+    }
 
-  return fullUser || null;
-  // fetch("/api/login", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({ username, password }),
-  // })
-  //   .then((res) => res.json())
-  //   .catch((err) => console.error(err));
+    const { token, user } = data;
+
+    localStorage.setItem("token", token);
+    console.log("JWT Token stored:", token);
+
+    return user;
+  } catch (error) {
+    console.error("Error during login:", error);
+    return null;
+  }
 }
 
 export function getCurrentUser() {
