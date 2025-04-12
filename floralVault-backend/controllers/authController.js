@@ -33,6 +33,8 @@ export const loginUser = async (req, res) => {
         token,
         user: {
           id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
           username: user.username,
           email: user.email,
           bio: user.bio,
@@ -77,9 +79,8 @@ export const registerUser = async (req, res) => {
         lastName,
         email,
         password: await bcrypt.hash(password, 10),
-        bio,
+        bio: bio ?? "",
         avatarUrl,
-        essence: user.essence,
         joinedAt: new Date(),
       },
     });
@@ -90,10 +91,13 @@ export const registerUser = async (req, res) => {
       token,
       user: {
         id: newUser.id,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
         username: newUser.username,
         email: newUser.email,
         bio: newUser.bio,
         avatarUrl: newUser.avatarUrl,
+        essence: newUser.essence,
       },
     });
   } catch (error) {
