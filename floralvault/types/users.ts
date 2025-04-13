@@ -11,6 +11,15 @@ export interface User {
 
 export interface UserCredentials extends Pick<User, "id" | "username"> {
   password: string;
-
   email?: string;
+}
+
+export interface RegisterUser {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  bio?: string;
+  avatarUrl?: string;
 }
