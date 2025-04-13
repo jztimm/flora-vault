@@ -1,4 +1,4 @@
-import { User, UserCredentials } from "@/types/users";
+import { RegisterUser, User, UserCredentials } from "@/types/users";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -37,6 +37,38 @@ export async function loginUser({
   } catch (error) {
     console.error("Error during login:", error);
     return null;
+  }
+}
+
+export async function registerUser(input: RegisterUser): Promise<{
+  user?: User;
+  token?: string;
+  error?: string;
+  errors?: { field: string; message: string }[];
+} | null> {
+  try {
+    const response = await fetch(baseUrl + "/api/auth/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(input),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Registration failed:", data.message || "Unknown error");
+      return {
+        error: data.message || "Registration failed",
+        errors: data.errors || [],
+      };
+    }
+
+    return { user: data.user, token: data.token };
+  } catch (error) {
+    console.error("Error during registration:", error);
+    return { error: "Unexpected error occurred during registration" };
   }
 }
 

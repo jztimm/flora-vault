@@ -54,6 +54,8 @@ export const registerUser = async (req, res) => {
   const { username, firstName, lastName, email, password, bio, avatarUrl } =
     req.body;
 
+  const errors = [];
+
   const existingUserEmail = await prisma.user.findUnique({
     where: {
       email,
@@ -64,11 +66,15 @@ export const registerUser = async (req, res) => {
   });
 
   if (existingUserEmail) {
-    return res.status(409).json({ message: "Email is already registered" });
+    errors.push({ message: "Email is already registered", field: "email" });
   }
 
   if (existingUserUsername) {
-    return res.status(409).json({ message: "Username is already taken" });
+    errors.push({ message: "Username is already taken", field: "username" });
+  }
+
+  if (errors.length > 0) {
+    return res.status(409).json({ errors });
   }
 
   try {

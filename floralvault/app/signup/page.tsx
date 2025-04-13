@@ -18,9 +18,10 @@ import { Button } from "@/components/ui/button";
 // import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
-import { userCred } from "@/mock/userData";
 import { useUser } from "@/context/UserContext";
 import { Eye, EyeOff } from "lucide-react";
+import { registerUser } from "@/lib/utils";
+import { toast } from "sonner";
 
 const signupSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -50,51 +51,38 @@ const SignUp = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof signupSchema>) => {
+  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     setIsLoading(true);
 
-    // Check if user already exists in userData
-    const existingEmail = userCred.find(
-      (user) => user.email?.toLowerCase() === values.email.toLowerCase().trim()
-    );
+    const result = await registerUser(values);
 
-    const existingUsername = userCred.find(
-      (user) =>
-        user.username.toLowerCase() === values.username.toLowerCase().trim()
-    );
-
-    if (existingEmail || existingUsername) {
+    // Check if user already exists in userData with email or username
+    if (!result || result.error || !result.user || !result.token) {
       setIsLoading(false);
 
-      if (existingEmail) {
-        form.setError("email", {
-          message: "An account with this email already exists",
+      if (Array.isArray(result?.errors)) {
+        result.errors.forEach((err) => {
+          form.setError(err.field as keyof z.infer<typeof signupSchema>, {
+            message: err.message || "Invalid input",
+          });
         });
-      }
-
-      if (existingUsername) {
-        form.setError("username", {
-          message: "Username is already taken",
+        toast.error("Please fix highlighted fields", {
+          description: "Username or email might already be in use.",
         });
+      } else {
+        toast.error(result?.error || "Registration failed. Please try again.");
       }
-
       return;
     }
 
-    if (!values) {
-      setIsLoading(false);
-      return null;
-    }
+    const { user, token } = result;
 
-    const newUser = {
-      ...values,
-      joinedAt: new Date(),
-    };
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
     // save user data to local storage and to db then redirect to home page
     setIsLoading(false);
-    localStorage.setItem("user", JSON.stringify(values));
-    setUser(newUser);
+    setUser(user);
 
     router.push("/");
   };
@@ -204,8 +192,11 @@ const SignUp = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full">
-              {isLoading ? "Creating account..." : `Sign up &rarr;`}
+            <Button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2"
+            >
+              {isLoading ? "Creating account..." : `Sign up →`}
             </Button>
 
             <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
